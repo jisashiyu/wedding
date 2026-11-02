@@ -141,7 +141,7 @@
 <div class="page">
 
   <!-- background music + toggle -->
-  <audio id="bgm" src="https://aka.doubaocdn.com/s/Ft0jdjumN2" loop preload="auto"></audio>
+  <audio id="bgm" src="https://aka.doubaocdn.com/s/X6G1fwQwd4" loop preload="auto" autoplay></audio>
   <button class="music-btn" id="musicBtn" aria-label="播放背景音乐">
     <svg class="note" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
     <span class="bars"><i></i><i></i><i></i></span>
@@ -283,11 +283,26 @@
     }
     tick(); setInterval(tick,1000);
 
-    // background music toggle (starts on user gesture)
+    // background music - autoplay on first interaction
     var bgm=document.getElementById('bgm'), musicBtn=document.getElementById('musicBtn');
-    musicBtn.addEventListener('click', function(){
-      if(bgm.paused){ bgm.play().then(function(){ musicBtn.classList.add('on'); }).catch(function(){ showToast('音乐暂无法播放'); }); }
-      else { bgm.pause(); musicBtn.classList.remove('on'); }
+    function tryPlay(){
+      var p=bgm.play();
+      if(p && p.then){ p.then(function(){ musicBtn.classList.add('on'); }).catch(function(){}); }
+    }
+    // 1) attempt autoplay on load (works in some webviews)
+    tryPlay();
+    // 2) WeChat JSBridge ready -> start (works inside WeChat)
+    document.addEventListener('WeixinJSBridgeReady', function(){ tryPlay(); }, false);
+    if(typeof WeixinJSBridge !== 'undefined'){ WeixinJSBridge.invoke('getNetworkType', {}, function(){ tryPlay(); }); }
+    // 3) first touch / click anywhere starts the music (reliable cross-browser "auto play")
+    var started=false;
+    function onFirstGesture(){ if(started) return; started=true; tryPlay(); }
+    document.addEventListener('touchstart', onFirstGesture, { once:true, passive:true });
+    document.addEventListener('click', onFirstGesture, { once:true, passive:true });
+    // music button remains a manual toggle
+    musicBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(bgm.paused){ tryPlay(); } else { bgm.pause(); musicBtn.classList.remove('on'); }
     });
 
     // map button
