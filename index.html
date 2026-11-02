@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-canvas-width="480" data-canvas-height="960">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张施煜 & 王喆璇 · 婚礼邀请函</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23b8945f'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23faf7f1' font-family='serif'%3E%E5%96%8D%3C/text%3E%3C/svg%3E">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  :root{
+    --gold:#b8945f;
+    --gold-deep:#9a7a45;
+    --gold-soft:#e3cfae;
+    --ink:#3a342c;
+    --ink-soft:#6b6255;
+    --ivory:#faf7f1;
+    --ivory-2:#f3ede2;
+    --line:rgba(184,148,95,.35);
+  }
+  html,body{ background:var(--ivory); font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif; color:var(--ink); }
+  body{ -webkit-font-smoothing:antialiased; }
+
+  .page{ width:100%; max-width:480px; margin:0 auto; background:var(--ivory); overflow:hidden; }
+
+  /* ---------- COVER ---------- */
+  .cover{ position:relative; height:100vh; min-height:640px; background:#111; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .cover img.cover-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.06); filter:brightness(.82); }
+  .cover .cover-shade{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,12,6,.20) 0%, rgba(20,12,6,.30) 40%, rgba(20,12,6,.72) 100%); }
+  .cover-inner{ position:relative; z-index:2; text-align:center; color:#fdfaf4; padding:0 28px; }
+  .cover .top-en{ font-family:Georgia,"Times New Roman",serif; font-size:14px; letter-spacing:6px; color:var(--gold-soft); margin-bottom:22px; opacity:0; animation:fadeUp 1.1s .2s forwards; }
+  .cover .monogram{ width:54px; height:54px; margin:0 auto 20px; border:1px solid rgba(227,207,174,.7); transform:rotate(45deg); display:flex; align-items:center; justify-content:center; opacity:0; animation:fadeUp 1.1s .4s forwards; }
+  .cover .monogram span{ transform:rotate(-45deg); font-family:"Noto Serif SC",serif; font-size:24px; color:var(--gold-soft); letter-spacing:0; }
+  .cover h1.names{ font-size:38px; font-weight:600; letter-spacing:6px; color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.4); opacity:0; animation:fadeUp 1.1s .6s forwards; }
+  .cover h1.names .amp{ font-family:Georgia,serif; font-style:italic; font-size:26px; color:var(--gold-soft); margin:0 8px; font-weight:400; }
+  .cover .divider{ width:56px; height:1px; background:var(--gold-soft); margin:22px auto; opacity:0; animation:fadeUp 1.1s .8s forwards; }
+  .cover .date-cn{ font-size:15px; letter-spacing:3px; color:#f4ead6; opacity:0; animation:fadeUp 1.1s .95s forwards; }
+  .cover .date-big{ font-family:Georgia,"Times New Roman",serif; font-size:44px; font-weight:400; color:#fff; letter-spacing:2px; margin-top:6px; opacity:0; animation:fadeUp 1.1s 1.05s forwards; }
+  .cover .date-big small{ font-size:22px; color:var(--gold-soft); }
+  .cover .scroll-hint{ position:absolute; bottom:26px; left:0; right:0; text-align:center; z-index:3; color:rgba(255,255,255,.75); font-size:12px; letter-spacing:3px; }
+  .cover .scroll-hint .chev{ width:20px; height:20px; margin:6px auto 0; border-right:1px solid var(--gold-soft); border-bottom:1px solid var(--gold-soft); transform:rotate(45deg); animation:chevr 1.8s infinite; }
+
+  /* ---------- sections ---------- */
+  section{ padding:64px 34px; }
+  .sec-eyebrow{ text-align:center; font-size:11px; letter-spacing:5px; color:var(--gold-deep); font-family:Georgia,"Times New Roman",serif; margin-bottom:12px; }
+  .sec-title{ text-align:center; font-size:26px; letter-spacing:4px; color:var(--ink); font-weight:600; }
+  .sec-orn{ display:flex; align-items:center; justify-content:center; gap:10px; margin:16px 0 0; }
+  .sec-orn::before,.sec-orn::after{ content:""; width:34px; height:1px; background:var(--line); }
+  .sec-orn .dot{ width:5px; height:5px; background:var(--gold); transform:rotate(45deg); }
+
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- invite text ---------- */
+  .invite{ text-align:center; }
+  .invite .greet{ font-size:15px; line-height:2.1; color:var(--ink-soft); margin:28px 0 10px; }
+  .invite .names-line{ font-size:22px; letter-spacing:4px; color:var(--ink); margin:18px 0; font-weight:600; }
+  .invite .names-line .amp{ font-family:Georgia,serif; font-style:italic; color:var(--gold-deep); }
+  .invite .verse{ font-size:14px; line-height:2.15; color:var(--ink-soft); letter-spacing:1px; }
+  .invite .thank{ font-size:15px; color:var(--gold-deep); letter-spacing:2px; margin-top:22px; }
+
+  /* ---------- info ---------- */
+  .info-card{ background:#fff; border:1px solid var(--line); padding:34px 26px; margin-top:30px; position:relative; }
+  .info-card::before{ content:""; position:absolute; inset:6px; border:1px solid rgba(184,148,95,.22); pointer-events:none; }
+  .info-row{ text-align:center; padding:14px 0; }
+  .info-row + .info-row{ border-top:1px dashed rgba(184,148,95,.28); }
+  .info-label{ font-size:12px; letter-spacing:3px; color:var(--gold-deep); margin-bottom:6px; }
+  .info-val{ font-size:18px; letter-spacing:2px; color:var(--ink); }
+  .info-val.big{ font-size:24px; font-weight:600; }
+  .info-sub{ font-size:12px; color:var(--ink-soft); letter-spacing:1px; margin-top:5px; }
+
+  /* ---------- gallery ---------- */
+  .gallery{ padding-top:30px; }
+  .photo{ position:relative; margin:0 auto 34px; width:88%; }
+  .photo .frame{ width:100%; height:auto; display:block; }
+  .photo .caption{ position:absolute; left:0; right:0; bottom:-14px; text-align:center; font-size:11px; letter-spacing:3px; color:var(--gold-deep); }
+  .photo.offset-l{ transform:rotate(-1.5deg); }
+  .photo.offset-r{ transform:rotate(1.5deg); }
+
+  /* ---------- closing ---------- */
+  .closing{ text-align:center; padding-bottom:90px; }
+  .closing .big{ font-size:30px; letter-spacing:6px; color:var(--ink); font-weight:600; margin-top:20px; }
+  .closing .sub{ font-size:13px; color:var(--ink-soft); letter-spacing:2px; margin-top:16px; line-height:1.9; }
+  .closing .monogram{ width:54px; height:54px; margin:34px auto 0; border:1px solid var(--line); transform:rotate(45deg); display:flex; align-items:center; justify-content:center; }
+  .closing .monogram span{ transform:rotate(-45deg); font-size:24px; color:var(--gold-deep); }
+  .closing .foot{ font-size:11px; color:#a89c8a; letter-spacing:2px; margin-top:26px; }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;} }
+  @keyframes chevr{ 0%{opacity:.3; transform:translateY(0) rotate(45deg);} 50%{opacity:1;} 100%{opacity:.3; transform:translateY(8px) rotate(45deg);} }
+
+  /* ---------- music toggle ---------- */
+  .music-btn{ position:fixed; top:16px; right:16px; z-index:50; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.55); background:rgba(20,12,6,.32); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .music-btn svg{ width:22px; height:22px; fill:#fdfaf4; }
+  .music-btn .bars{ display:none; }
+  .music-btn.on .bars{ display:flex; align-items:flex-end; gap:2px; height:14px; }
+  .music-btn.on .note{ display:none; }
+  .music-btn .bars i{ width:3px; background:#fdfaf4; border-radius:2px; animation:eq 1s infinite ease-in-out; }
+  .music-btn .bars i:nth-child(2){ animation-delay:.2s; }
+  .music-btn .bars i:nth-child(3){ animation-delay:.4s; }
+  @keyframes eq{ 0%,100%{height:4px;} 50%{height:14px;} }
+  @media (prefers-reduced-motion: reduce){ .music-btn .bars i{ animation:none; height:10px; } }
+
+  /* ---------- countdown ---------- */
+  .countdown{ margin-top:22px; opacity:0; animation:fadeUp 1.1s 1.2s forwards; }
+  .countdown .cd-label{ font-size:11px; letter-spacing:4px; color:var(--gold-soft); margin-bottom:12px; }
+  .countdown .cd-boxes{ display:flex; justify-content:center; gap:10px; }
+  .countdown .cd-cell{ width:56px; padding:8px 0 6px; background:rgba(255,255,255,.12); border:1px solid rgba(227,207,174,.5); text-align:center; }
+  .countdown .cd-cell b{ display:block; font-family:Georgia,serif; font-size:24px; font-weight:400; color:#fff; line-height:1.1; }
+  .countdown .cd-cell span{ font-size:10px; letter-spacing:2px; color:rgba(244,234,214,.85); }
+
+  /* ---------- map button ---------- */
+  .map-btn{ margin:26px auto 0; display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 26px; border:1px solid var(--line); background:#fff; color:var(--ink); font-family:inherit; font-size:14px; letter-spacing:2px; cursor:pointer; }
+  .map-btn svg{ width:18px; height:18px; fill:none; stroke:var(--gold-deep); stroke-width:1.6; }
+  .map-btn:active{ background:var(--ivory-2); }
+
+  /* ---------- guestbook / rsvp ---------- */
+  .form-card{ background:#fff; border:1px solid var(--line); padding:26px 22px; margin-top:14px; }
+  .form-card label{ display:block; font-size:12px; letter-spacing:2px; color:var(--gold-deep); margin:14px 0 8px; }
+  .form-card label:first-child{ margin-top:0; }
+  .form-card input[type=text], .form-card textarea{ width:100%; min-height:44px; border:1px solid rgba(184,148,95,.45); background:var(--ivory); color:var(--ink); font-family:inherit; font-size:16px; padding:10px 12px; outline:none; }
+  .form-card textarea{ min-height:88px; resize:vertical; line-height:1.7; }
+  .form-card input:focus, .form-card textarea:focus{ border-color:var(--gold); }
+  .rsvp-opts{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+  .rsvp-opts label{ margin:0; font-size:13px; letter-spacing:1px; color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; gap:6px; }
+  .rsvp-opts input{ accent-color:var(--gold); width:18px; height:18px; }
+  .form-btn{ margin-top:18px; width:100%; min-height:48px; border:none; background:var(--gold); color:#fff; font-family:inherit; font-size:15px; letter-spacing:3px; cursor:pointer; }
+  .form-btn:active{ background:var(--gold-deep); }
+  .rsvp-tip{ font-size:14px; color:var(--ink-soft); line-height:1.8; margin-bottom:16px; letter-spacing:1px; }
+  .rsvp-note{ font-size:12px; color:var(--ink-soft); opacity:.75; margin-top:12px; letter-spacing:1px; }
+  .messages{ margin-top:18px; }
+  .messages .empty{ text-align:center; font-size:12px; color:#a89c8a; letter-spacing:2px; padding:10px 0; }
+  .msg{ border-left:2px solid var(--gold-soft); padding:8px 12px; margin-bottom:12px; }
+  .msg .m-name{ font-size:13px; color:var(--gold-deep); letter-spacing:1px; }
+  .msg .m-body{ font-size:13px; color:var(--ink-soft); line-height:1.7; margin-top:4px; }
+
+  /* ---------- toast ---------- */
+  .toast{ position:fixed; left:50%; bottom:60px; transform:translateX(-50%) translateY(20px); background:rgba(20,12,6,.86); color:#fdfaf4; font-size:13px; letter-spacing:1px; padding:10px 20px; border-radius:24px; opacity:0; pointer-events:none; transition:opacity .4s, transform .4s; z-index:60; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- background music + toggle -->
+  <audio id="bgm" src="https://aka.doubaocdn.com/s/Ft0jdjumN2" loop preload="auto"></audio>
+  <button class="music-btn" id="musicBtn" aria-label="播放背景音乐">
+    <svg class="note" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span class="bars"><i></i><i></i><i></i></span>
+  </button>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- COVER -->
+  <div class="cover">
+    <img class="cover-bg" src="https://aka.doubaocdn.com/s/1XjpXdPmCE" alt="婚纱照">
+    <div class="cover-shade"></div>
+    <div class="cover-inner">
+      <div class="top-en">WE ARE GETTING MARRIED</div>
+      <div class="monogram"><span>囍</span></div>
+      <h1 class="names">张施煜 <span class="amp">&amp;</span> 王喆璇</h1>
+      <div class="divider"></div>
+      <div class="date-cn">诚邀您见证我们的婚礼</div>
+      <div class="date-big">12.05 <small>2026</small></div>
+      <div class="countdown">
+        <div class="cd-label">距婚礼还有</div>
+        <div class="cd-boxes">
+          <div class="cd-cell"><b id="cd-d">00</b><span>天</span></div>
+          <div class="cd-cell"><b id="cd-h">00</b><span>时</span></div>
+          <div class="cd-cell"><b id="cd-m">00</b><span>分</span></div>
+          <div class="cd-cell"><b id="cd-s">00</b><span>秒</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">下滑查看邀请函
+      <div class="chev"></div>
+    </div>
+  </div>
+
+  <!-- INVITE -->
+  <section class="invite">
+    <div class="sec-eyebrow reveal">INVITATION</div>
+    <div class="sec-title reveal">婚礼邀请函</div>
+    <div class="sec-orn reveal"></div>
+    <p class="greet reveal">两姓联姻，一堂缔约。<br>良缘永结，匹配同称。</p>
+    <div class="names-line reveal">张施煜 <span class="amp">&amp;</span> 王喆璇</div>
+    <p class="verse reveal">谨定于 2026年12月5日（星期六）举行婚礼，<br>真诚期待您的莅临，与我们一同见证这一重要时刻。</p>
+    <div class="thank reveal">敬备薄酒 · 恭候光临</div>
+  </section>
+
+  <!-- INFO -->
+  <section>
+    <div class="sec-eyebrow reveal">CEREMONY &amp; RECEPTION</div>
+    <div class="sec-title reveal">婚礼信息</div>
+    <div class="sec-orn reveal"></div>
+    <div class="info-card reveal">
+      <div class="info-row">
+        <div class="info-label">婚礼时间</div>
+        <div class="info-val big">2026年12月5日</div>
+        <div class="info-sub">17:08 迎宾签到 · 与新人合影留念</div>
+        <div class="info-sub">18:08 开席</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">婚礼地点</div>
+        <div class="info-val">上海摩可纳婚礼艺术中心 · 摩可纳厅</div>
+      </div>
+    </div>
+    <button class="map-btn reveal" id="mapBtn">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-5.1-7-10a7 7 0 1 1 14 0c0 4.9-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+      查看导航地图
+    </button>
+  </section>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="sec-eyebrow reveal">OUR MOMENTS</div>
+    <div class="sec-title reveal">我们的回忆</div>
+    <div class="sec-orn reveal"></div>
+    <div class="gallery reveal">
+      <div class="photo offset-r">
+        <img class="frame" src="https://aka.doubaocdn.com/s/1D0fQSkxUj" alt="合影">
+      </div>
+      <div class="photo offset-l">
+        <img class="frame" src="https://aka.doubaocdn.com/s/y52IU7ceTd" alt="对视">
+      </div>
+      <div class="photo offset-r">
+        <img class="frame" src="https://aka.doubaocdn.com/s/qgOQzHf2uL" alt="婚礼现场">
+      </div>
+      <div class="photo offset-l">
+        <img class="frame" src="https://aka.doubaocdn.com/s/1XjpXdPmCE" alt="海边">
+      </div>
+    </div>
+  </section>
+
+  <!-- GUESTBOOK + RSVP -->
+  <section>
+    <div class="sec-eyebrow reveal">BLESSING &amp; RSVP</div>
+    <div class="sec-title reveal">祝福与回执</div>
+    <div class="sec-orn reveal"></div>
+
+    <div class="form-card reveal" style="text-align:center;">
+      <p class="rsvp-tip">诚邀您填写出席回执，并写下对两位新人的祝福</p>
+      <button class="form-btn" id="rsvLink" style="width:100%;">填写宾客回执与祝福</button>
+      <p class="rsvp-note">点击后跳转到问卷页面填写，您的每一句祝福我们都会看到</p>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="sec-eyebrow reveal">THANK YOU</div>
+    <div class="big reveal">敬备薄酒 恭候光临</div>
+    <div class="sub reveal">愿与您共度这美好的一天<br>您的到来 是我们最深的荣幸</div>
+    <div class="monogram reveal"><span>囍</span></div>
+    <div class="foot reveal">张施煜 · 王喆璇 敬邀<br>2026 · 12 · 05</div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    // reveal on scroll
+    var els=document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+      },{threshold:.12});
+      els.forEach(function(el){ io.observe(el); });
+    } else { els.forEach(function(el){ el.classList.add('in'); }); }
+
+    // toast
+    var toast=document.getElementById('toast'), toastTimer;
+    function showToast(t){ toast.textContent=t; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toast.classList.remove('show'); },2600); }
+
+    // countdown to 2026-12-05 17:08:00
+    var target=new Date(2026,11,5,17,8,0).getTime();
+    var cdD=document.getElementById('cd-d'), cdH=document.getElementById('cd-h'), cdM=document.getElementById('cd-m'), cdS=document.getElementById('cd-s');
+    function pad(n){ return n<10? '0'+n : ''+n; }
+    function tick(){
+      var diff=target-Date.now();
+      if(diff<=0){ cdD.textContent='00'; cdH.textContent='00'; cdM.textContent='00'; cdS.textContent='00'; showToast('今天就是婚礼日！'); return; }
+      cdD.textContent=pad(Math.floor(diff/86400000));
+      cdH.textContent=pad(Math.floor(diff/3600000)%24);
+      cdM.textContent=pad(Math.floor(diff/60000)%60);
+      cdS.textContent=pad(Math.floor(diff/1000)%60);
+    }
+    tick(); setInterval(tick,1000);
+
+    // background music toggle (starts on user gesture)
+    var bgm=document.getElementById('bgm'), musicBtn=document.getElementById('musicBtn');
+    musicBtn.addEventListener('click', function(){
+      if(bgm.paused){ bgm.play().then(function(){ musicBtn.classList.add('on'); }).catch(function(){ showToast('音乐暂无法播放'); }); }
+      else { bgm.pause(); musicBtn.classList.remove('on'); }
+    });
+
+    // map button
+    document.getElementById('mapBtn').addEventListener('click', function(){
+      window.open('https://uri.amap.com/search?keyword='+encodeURIComponent('上海摩可纳婚礼艺术中心'), '_blank');
+    });
+
+    // questionnaire (wjx) - collect guest info centrally
+    var RSV_LINK='https://www.wjx.top/vm/wkBe2Ew.aspx';
+    document.getElementById('rsvLink').addEventListener('click', function(){
+      window.open(RSV_LINK, '_blank');
+    });
+  })();
+</script>
+</body>
+</html>
